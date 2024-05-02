@@ -1,0 +1,9 @@
+.galeria {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-top: 10px;
+   }

@@ -1,0 +1,12 @@
+.abonobox {
+    /*width: 80vw;*/
+    height: 75vh;
+    /*display: flex;*/
+    flex-direction: column;
+    /*justify-content: center;*/
+    padding: 10px;
+    margin: 10px 50px;
+    border: solid 1px;
+    border-radius: 1%;
+    border-color:lightslategray;
+}
