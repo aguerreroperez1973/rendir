@@ -6,7 +6,6 @@ import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { user } from '../../database/user.js';
 
-
 function LogIn () {
 
   const [email, setEmail] = useState('');

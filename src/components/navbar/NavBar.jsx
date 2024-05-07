@@ -18,14 +18,11 @@ function NavBar () {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
             navbarScroll>
-              
             <Nav.Link href="/home" >Home</Nav.Link>
             <Nav.Link href="/abono" >Ingresar abono</Nav.Link>
             <Nav.Link href="/register">Registrar</Nav.Link>
-            <Nav.Link href="/rendiciones">Rendicion</Nav.Link>
-
+            <Nav.Link href="/rendicion">Rendicion</Nav.Link>
           </Nav>
-         
         </Navbar.Collapse>
       </Container>
     </Navbar>

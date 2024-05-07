@@ -95,13 +95,12 @@ const registrarUsuario = (nombre, apellido, email, password) => {
 
   return (
     <>
-      <div className="registerbox" >
+      <div className="row col-10 col-sm-9 col-md-8 col-lg-6 mx-auto mt-5 border border-light rounded p-4" >
         <div><h3>Ingresar tus datos</h3></div>
+        <hr />
         <div>
             <Form onSubmit={validarInput}>
-
             <Alert variant={alert}>{message}</Alert>
-
               <Form.Group className="mb-3" >
                   <Form.Label><strong>Nombre</strong></Form.Label>
                   <Form.Control type="text" name="nombre" placeholder="Ingresar nombre"

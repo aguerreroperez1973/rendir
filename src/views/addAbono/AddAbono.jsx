@@ -83,8 +83,9 @@ const registrarAbono = (proyecto, trabajador, descripcion, monto, fecha_out) => 
 
   return (
     <>
-        <div className="abonobox" >
+        <div className="row col-10 col-sm-9 col-md-8 col-lg-6 mx-auto mt-5 border border-light rounded p-4" >
         <div><h3>Ingresar abono:</h3></div>
+        <hr />
         <div>
             <Form onSubmit={validarInput} >
 
@@ -132,7 +133,9 @@ const registrarAbono = (proyecto, trabajador, descripcion, monto, fecha_out) => 
         </div>
        <br />
                 <ul>
-                    {data.map(abonos => <li key={abonos.id} > {abonos.proyecto} - {abonos.trabajador} - {abonos.descripcion} - {abonos.monto} - {abonos.fecha_in} - {abonos.fecha_out} - {abonos.activo} </li>)}
+                    {data.map(abonos => <li key={abonos.id} > {abonos.proyecto} - 
+                    {abonos.trabajador} - {abonos.descripcion} - {abonos.monto} - 
+                    {abonos.fecha_in} - {abonos.fecha_out} - {abonos.activo} </li>)}
                 </ul>
       </div>
       </>

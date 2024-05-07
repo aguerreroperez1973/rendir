@@ -29,6 +29,7 @@ function App() {
             <Route path="/abono" element={ <AddAbono /> } />
             <Route path="/register" element={ <Register />} />
             <Route path="/rendiciones" element={ <Rendiciones />} />
+            <Route path="/rendicion/" element={ <Rendicion />} />
             <Route path="/rendicion/:id" element={ <Rendicion />} />
           </Routes>
       </BrowserRouter>

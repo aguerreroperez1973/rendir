@@ -4,6 +4,7 @@ export const Context = createContext({});
 
 const ContextProvider = ({ children }) => {
     const [data, setData] = useState([]);
+    const [rendicion, setRendicion] = useState([]);
     const [total, setTotal] = useState(0);
     const url = '/public/abonos.json';
 
@@ -24,7 +25,7 @@ useEffect(() => {
 }, []);
 
     return (
-            <Context.Provider value={{data, setData, total, setTotal}} >{children}</Context.Provider>
+            <Context.Provider value={{data, setData,rendicion, setRendicion, total, setTotal}} >{children}</Context.Provider>
     )
 };
 

@@ -23,9 +23,9 @@ const ToCard = ( {abono} ) => {
             <Card.Title>Proyecto: { abono.proyecto} </Card.Title>
             <Card.Text> Descripción:  {abono.descripcion}</Card.Text>
             <hr />
-            <Card.Text> Monto: {abono.monto} </Card.Text>
+            <Card.Text> Monto: $ {abono.monto} </Card.Text>
             <hr />
-            <div><Button variant="primary" onClick={ irAPersonajes }>Go somewhere</Button></div> 
+            <div><Button variant="primary" onClick={ irAPersonajes }>Ir a Rendición</Button></div> 
           </Card.Body>
         </Card>
     </>

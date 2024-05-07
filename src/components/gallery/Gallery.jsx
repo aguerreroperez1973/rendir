@@ -6,7 +6,7 @@ import './Gallery.css'
 const Gallery = () => {
 
  const {data} = useContext(Context);
- console.log(data)
+ //console.log(data)
 
   return (
           <div className="galeria">   
