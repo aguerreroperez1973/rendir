@@ -4,12 +4,15 @@ import './login.css'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
-import { user } from '../../database/user.js';
+//import { user } from '../../database/user.js';
+import { ENDPOINT } from '../../config/constans.js';
 
 function LogIn () {
-
+  //const initialForm = { email: 'docente@desafiolatam.com', password: '123456' }
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [user, setUser] = useState();
+  //const [user, setUser] = useState([{}]);
   const navigate = useNavigate();
   //const [datauser, setDataUser] = useState(user);
 
@@ -32,9 +35,9 @@ function LogIn () {
            return
          } 
        
-         setAlert("success")
-         setMessage("datos ingresados: " + email +"-"+ password)
-         console.log("datos ingresados: " + email +"-"+ password)
+         //setAlert("success")
+         //setMessage("datos ingresados: " + email +"-"+ password)
+        // console.log("datos ingresados: " + email +"-"+ password)
 
     autenticacion(email,password);
   
@@ -42,14 +45,27 @@ function LogIn () {
     setPassword('');
  }
 
- const autenticacion = (email, password) => {
-  //console.log('autenticacion')
-  const autenticado = user.filter(el => el.email === email && el.password === password)
-  if (autenticado == ''){  setAlert("danger")
-                            setMessage("Error: email o Password incorrectos !!!") }
-     else{ navigate(`/home`); }
- }
+ const autenticacion = async (email, password) => {
+  const userlogin = { email: email,  password: password };
 
+  fetch(ENDPOINT.login , {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",},
+  body: JSON.stringify(userlogin)},)
+  .then(response => response.json())
+  .then(result => {
+    if(!result.token){
+      console.log(result.message);
+      setAlert("danger")
+      setMessage(result.message)
+     } else {
+            localStorage.setItem("token", result.token)
+            //let mytoken = localStorage.getItem("token")
+            //console.log(mytoken)
+            navigate(`/home/`) }})
+  .catch((err) => {console.log(err);});
+ }
     const irARegistrarse = () => {
     navigate(`/register`);
     };

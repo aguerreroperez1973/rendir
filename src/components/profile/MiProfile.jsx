@@ -1,13 +1,13 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import './register.css';
+import './miprofile.css';
 import { useContext, useState } from 'react';
-//import { user } from '../../database/user.js';
 import { ENDPOINT } from '../../config/constans.js';
 import { Context } from '../../contexts/Context';
+import { useParams } from 'react-router-dom';
 
-function Register() {
+function MiProfile( ) {
   
   const {userdata} = useContext(Context);
   const [nombre, setNombre] = useState('');
@@ -15,6 +15,10 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
+  
+  ///// ID del usuario ////////////////////////////////////////////
+  const { user_id } = useParams();
+  console.log(user_id)
 
 //Estado para los errores
 const [alert, setAlert] = useState('');
@@ -95,8 +99,8 @@ const registrarUsuario = async (nombre, apellido, email, password) => {
 
   return (
     <>
-      <div className="row col-10 col-sm-9 col-md-8 col-lg-6 mx-auto mt-5 border border-light rounded p-4" >
-        <div><h3>Ingresar tus datos</h3></div>
+      <div className="row mx-auto" >
+        <div><h3>Mis tus datos</h3></div>
         <hr />
         <div>
             <Form onSubmit={validarInput}>
@@ -104,7 +108,7 @@ const registrarUsuario = async (nombre, apellido, email, password) => {
               <Form.Group className="mb-3" >
                   <Form.Label><strong>Nombre</strong></Form.Label>
                   <Form.Control type="text" name="nombre" placeholder="Ingresar nombre"
-                  onChange={(e) => setNombre(e.target.value)} value={nombre} />
+                  onChange={(e) => setNombre(e.target.value)} value={userdata.nombre} />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -145,4 +149,4 @@ const registrarUsuario = async (nombre, apellido, email, password) => {
   );
 }
 
-export default Register;
+export default MiProfile;

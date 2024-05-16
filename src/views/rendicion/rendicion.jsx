@@ -5,13 +5,15 @@
 //import { tareasIniciales } from '../../database/tareasIniciales';
 //import { useParams } from 'react-router-dom';
 import RendicionForm from '../../components/rendicion/RendicionForm';
-import RendicionTable from '../../components/rendicion/RendicionTable';
+//import UploadFile from '../../components/upImage/uploadFile';
+//import RendicionTable from '../../components/rendicion/RendicionTable';
 
 const Rendicion = () => {
     return (
       <div>
-        <RendicionForm />
-        <RendicionTable />
+       <RendicionForm />
+       {/*} <UploadFile />*/}
+      {/*  <RendicionTable /> //////////SE traslado a componente rendicionForm*/} 
       </div>
     );
   };

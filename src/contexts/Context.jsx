@@ -1,31 +1,49 @@
 import { createContext, useState, useEffect } from "react";
+import { ENDPOINT } from "../config/constans.js";
 
 export const Context = createContext({});
 
 const ContextProvider = ({ children }) => {
+  let token = localStorage.getItem('token')
     const [data, setData] = useState([]);
-    const [rendicion, setRendicion] = useState([]);
-    const [total, setTotal] = useState(0);
-    const url = '/public/abonos.json';
+    const [rendiciones, setRendiciones] = useState([]);
+    //const [total, setTotal] = useState(0);
+    const [userdata, setUserdata] = useState([]);
+    const [user, setUser] = useState('')
+  
+  const consultarApiAbono = async () => {  
+      //const response = await fetch(ENDPOINT.abonos);
+      const response = await fetch(ENDPOINT.abonos,{
+        headers: {Authorization: `Bearer ${token}`}});
+      const abonodata = await response.json();
+      //console.log(data)
+      setData(abonodata)
+  };
 
-  const consultarApi = async () => {  
-      const response = await fetch(url);
-      const data = await response.json();
-     // console.log(data)
-     
-      /*const newdata = data.map((p) => {
-        const obj = {cantidad: 0 ,...p}
-        return obj;
-      })*/
-      setData(data)
+  const consultarApiUser = async () => {  
+    const res = await fetch(ENDPOINT.users,{
+      headers: {Authorization: `Bearer ${token}`}});
+    const userdata = await res.json();
+    //console.log(userdata)
+    setUserdata(userdata)
+  };
+
+  const consultarApiRendicion = async () => {  
+    const respuesta = await fetch(ENDPOINT.rendiciones,{
+      headers: {Authorization: `Bearer ${token}`}});
+    const rendidata = await respuesta.json();
+    //console.log(rendidata)
+    setRendiciones(rendidata)
   };
 
 useEffect(() => {
-  consultarApi();
+  consultarApiAbono();
+  consultarApiUser();
+  consultarApiRendicion();
 }, []);
 
     return (
-            <Context.Provider value={{data, setData,rendicion, setRendicion, total, setTotal}} >{children}</Context.Provider>
+            <Context.Provider value={{data, setData, rendiciones, setRendiciones, userdata, setUserdata, user, setUser}} >{children}</Context.Provider>
     )
 };
 

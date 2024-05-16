@@ -4,16 +4,12 @@ import ToCard from '../tocard/ToCard';
 import './Gallery.css'
 
 const Gallery = () => {
-
- const {data} = useContext(Context);
- //console.log(data)
-
+  
+  const { data } = useContext(Context);
   return (
           <div className="galeria">   
               {
-                data.map((p) => {
-                                  return <ToCard abono={p} key={p.id} ></ToCard>
-                })
+                data.map((p) => { return <ToCard abono={p} key={p.id} ></ToCard>})
               }
           </div>
         )

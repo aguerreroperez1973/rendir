@@ -4,8 +4,6 @@ import ToCard from './ToCard';
 
 const Gallery = () => {
 
- // const {data} = useContext(Context);
-
   return (
           <div className="galeria">
             <ToCard></ToCard>

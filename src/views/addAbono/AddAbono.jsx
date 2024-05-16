@@ -6,19 +6,22 @@ import { useContext, useState } from 'react';
 //import { abonos } from '../../database/abonos.js';
 import Alert from 'react-bootstrap/Alert';
 import { Context } from '../../contexts/Context.jsx';
+import { ENDPOINT } from '../../config/constans.js';
 
 const AddAbono = () => {
 
-  const {data, setData} = useContext(Context);
+  const {data} = useContext(Context);
+
+  //// preparar fecha el dia ////////////////////////////////
   let date = new Date();
   let day = `${(date.getDate())}`.padStart(2,'0');
   let month = `${(date.getMonth()+1)}`.padStart(2,'0');
   let year = date.getFullYear();
-  const fecha_in =`${day}-${month}-${year}`;
+  const fecha_in =`${year}-${month}-${day}`;
 
   //const [dataAbonos, setDataAbonos] = useState(abonos);
   const [proyecto, setProyecto] = useState('');
-  const [trabajador, setTrabajador] = useState('');
+  const [user_id, setUser_id] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [monto, setMonto] = useState('');
   const [fecha_out, setFecha_out] = useState('');
@@ -30,49 +33,61 @@ const [message, setMessage] = useState('');
 //Función antes de enviar el formulario
 const validarInput = (e) => {
      
-  // Prevenimos el comportamiento por defecto
+// Prevenimos el comportamiento por defecto
   e.preventDefault();
- // console.log(dataAbonos)
- // console.log("datos ingresados: " + proyecto +"-"+ trabajador +"-"+ descripcion +"-"+ monto +"-"+ fecha_out )
 
   // Validación input
-   if(proyecto === '' || trabajador ==='' || descripcion ==='' || monto ==='' || fecha_out ===''){
+   if(proyecto === '' || user_id ==='' || descripcion ==='' || monto ==='' || fecha_out ===''){
          setAlert("danger")
          setMessage("Error:Debe completar todos los datos")
          return
        } 
 
-  validarDatos(proyecto, trabajador, descripcion, monto, fecha_out)
-  //registrarAbono(proyecto, trabajador, descripcion, monto, fecha_out)
-  //console.log(dataAbonos)
+  validarDatos(proyecto, user_id, descripcion, monto, fecha_out)
 }
 
-const validarDatos = (proyecto, trabajador, descripcion, monto, fecha_out) => {
+const validarDatos = (proyecto, user_id, descripcion, monto, fecha_out) => {
 
-  const autenticado = data.filter(el => el.proyecto === proyecto && el.trabajador === trabajador)
+  const autenticado = data.filter(el => el.proyecto === proyecto && el.user_id === user_id)
   if (autenticado != ""){  setAlert("danger")
                            setMessage("Error: El abono ya existe para ese trabajador!!!") 
                           return
                         }
-    registrarAbono(proyecto, trabajador, descripcion, monto, fecha_out)        
+    registrarAbono(proyecto, user_id, descripcion, monto, fecha_out)        
   }
 
-const registrarAbono = (proyecto, trabajador, descripcion, monto, fecha_out) => {
-  console.log("registrar dato")
-  //setDataAbonos([...dataAbonos, {proyecto: proyecto, trabajador: trabajador, descripcion: descripcion, monto: monto, fecha_out: fecha_out, activo: "true"} ]);
-  setData([...data, {proyecto: proyecto, 
-    trabajador: trabajador, 
-    descripcion: descripcion,
-    monto: monto,
-    fecha_in: fecha_in,
-    fecha_out: fecha_out,
-    activo: "true"} ]);
-    
-  setAlert("success")
-  setMessage("Abono ingresado con exito ")
+const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
+  let token = localStorage.getItem('token')
+
+  const newAbono = {  
+              proyecto: proyecto, 
+              descripcion: descripcion,
+              monto: monto,
+              fecha_in: fecha_in,
+              fecha_out: fecha_out,
+              activo: true,
+              user_id: user_id, 
+             // rendicion_id: 999
+            };
+  
+  fetch(ENDPOINT.abono , {
+    method: "POST",
+    headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
+    body: JSON.stringify(newAbono)},) 
+    .then(response => {
+      if(!response.ok){
+        console.log(response.ok);
+        setAlert("danger")
+        setMessage("Error: No fué posible ingresar el abono")
+      }
+      else{console.log(response.ok);
+        setAlert("success")
+        setMessage("Abono ingresado con exito")}
+      })
+    .catch((err) => {console.log(err)})
  
   setProyecto('');
-  setTrabajador('');
+  setUser_id('');
   setDescripcion('');
   setMonto('');
   setFecha_out('');
@@ -87,10 +102,7 @@ const registrarAbono = (proyecto, trabajador, descripcion, monto, fecha_out) => 
         <div><h3>Ingresar abono:</h3></div>
         <hr />
         <div>
-            <Form onSubmit={validarInput} >
-
-              <Alert variant={alert}>{message}</Alert>
-                
+            <Form onSubmit={validarInput} > <Alert variant={alert}>{message}</Alert>
                 <Form.Group className="mb-3">
                       <Form.Label><strong>Nombre del proyecto</strong></Form.Label>
                       <Form.Control type="text" name="proyecto" placeholder="Ingresar nombre del proyecto"
@@ -98,13 +110,13 @@ const registrarAbono = (proyecto, trabajador, descripcion, monto, fecha_out) => 
                     </Form.Group>
 
                 <Form.Group className="mb-3" >
-                <Form.Label><strong>Nombre Trabajador</strong></Form.Label>
+                <Form.Label><strong>Nombre del Trabajador</strong></Form.Label>
                     <Form.Select aria-label="Default select example" name="trabajador" 
-                    onChange={(e) => setTrabajador(e.target.value)} value={trabajador} >
+                    onChange={(e) => setUser_id(e.target.value)} value={user_id} >
                     <option>Seleccionar... </option>
-                    <option value="Ulises Reyes">Ulises Reyes</option>
-                    <option value="David Alarcón">David Alarcón</option>
-                    <option value="Carlos Guerra">Carlos Guerra</option>
+                    <option value="1">Ulises Reyes</option>
+                    <option value="2">José Fuentes</option>
+                    <option value="3">Luis Chamorro</option>
                     </Form.Select>
                 </Form.Group>
 
@@ -132,11 +144,11 @@ const registrarAbono = (proyecto, trabajador, descripcion, monto, fecha_out) => 
             </Form>
         </div>
        <br />
-                <ul>
+              {/*}  <ul>
                     {data.map(abonos => <li key={abonos.id} > {abonos.proyecto} - 
                     {abonos.trabajador} - {abonos.descripcion} - {abonos.monto} - 
                     {abonos.fecha_in} - {abonos.fecha_out} - {abonos.activo} </li>)}
-                </ul>
+                    </ul> */}
       </div>
       </>
   )

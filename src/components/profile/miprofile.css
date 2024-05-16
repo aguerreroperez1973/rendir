@@ -1,0 +1,12 @@
+.registerbox {
+    /*width: 80vw;*/
+    height: 70vh;
+    /*display: flex;*/
+    flex-direction: column;
+    /*justify-content: center;*/
+    padding: 10px;
+    margin: 10px 50px;
+    border: solid 1px;
+    border-radius: 3%;
+    border-color:lightslategray;
+}
