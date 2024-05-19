@@ -4,12 +4,13 @@ import { ENDPOINT } from "../config/constans.js";
 export const Context = createContext({});
 
 const ContextProvider = ({ children }) => {
-  let token = localStorage.getItem('token')
+  let token = sessionStorage.getItem('token')
+  
     const [data, setData] = useState([]);
     const [rendiciones, setRendiciones] = useState([]);
-    //const [total, setTotal] = useState(0);
     const [userdata, setUserdata] = useState([]);
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState('');
+    console.log('cont:'+user)
   
   const consultarApiAbono = async () => {  
       //const response = await fetch(ENDPOINT.abonos);

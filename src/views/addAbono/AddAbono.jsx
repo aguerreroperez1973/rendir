@@ -1,16 +1,22 @@
-//import React from 'react'
+//import { abonos } from '../../database/abonos.js';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import './addabono.css';
-import { useContext, useState } from 'react';
-//import { abonos } from '../../database/abonos.js';
 import Alert from 'react-bootstrap/Alert';
+import './addabono.css';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../contexts/Context.jsx';
 import { ENDPOINT } from '../../config/constans.js';
+import { useNavigate } from 'react-router-dom';
 
 const AddAbono = () => {
+  const navigate = useNavigate();
+  const { data, setUser } = useContext(Context);
+  
+  const token = sessionStorage.getItem("token");
+  const username = sessionStorage.getItem("user");
 
-  const {data} = useContext(Context);
+  useEffect(()=> { if(!token){ navigate(`/login/`) } 
+                        else { setUser(username) } }, [])
 
   //// preparar fecha el dia ////////////////////////////////
   let date = new Date();

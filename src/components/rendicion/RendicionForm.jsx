@@ -1,12 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Context } from "../../contexts/Context";
 import Alert from 'react-bootstrap/Alert';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ENDPOINT } from '../../config/constans.js';
 import RendicionTable from "./RendicionTable.jsx";
 
 const RendicionForm = () => {
+  const navigate = useNavigate();
+  useEffect(()=> { 
+    if(!sessionStorage.getItem('username')){ navigate(`/login/`) }
+  },[])
     const { data, rendiciones, setRendiciones} = useContext(Context);
 
     const [monto, setMonto] = useState('');

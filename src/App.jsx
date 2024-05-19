@@ -13,12 +13,13 @@ import LogIn from './components/login/LogIn';
 import AddAbono from './views/addAbono/AddAbono';
 import Profile from './views/profile/profile';
 import './App.css';
+//import { useContext } from 'react';
+//import { Context } from './contexts/Context';
 
 function App() {
 
   //const { user } = useContext(Context);
   //console.log(user)
- 
   return (
     <>
       <BrowserRouter>

@@ -2,12 +2,19 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import './miprofile.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ENDPOINT } from '../../config/constans.js';
 import { Context } from '../../contexts/Context';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function MiProfile( ) {
+  const navigate = useNavigate();
+  const { user } = useContext(Context);
+
+  useEffect(()=> { 
+    if(!user){ navigate(`/login/`) }
+  },[])
+
   
   const {userdata} = useContext(Context);
   const [nombre, setNombre] = useState('');
@@ -15,10 +22,6 @@ function MiProfile( ) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  
-  ///// ID del usuario ////////////////////////////////////////////
-  const { user_id } = useParams();
-  console.log(user_id)
 
 //Estado para los errores
 const [alert, setAlert] = useState('');

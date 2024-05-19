@@ -2,15 +2,17 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './navbar.css'
-//import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '../../contexts/Context';
 
 function NavBar () {
+  const { user } = useContext(Context);
 
-  /*const handleClick = (e) => {
-    //Navigate(`/miperfil/${user_id}`);
-    console.log(e.target);
-    Navigate(`/perfil/3`);
-    };*/
+  const handleClick = () => {
+    sessionStorage.removeItem('username')
+    Navigate(`/login`);
+    };
 
   return (
       <div style={{ width: '100%', height:'100%', minWidth:"395px"}}>
@@ -34,7 +36,10 @@ function NavBar () {
               </Navbar.Collapse>
               <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
-                  Signed in as: <a href="/perfil"  title="ir a mi Perfil" >User</a>
+                  Signed in as: <a href="/perfil"  title="ir a mi Perfil" >{user}</a>
+                </Navbar.Text>&nbsp;&nbsp;&nbsp;&nbsp;
+                <Navbar.Text>
+                  <a href="/login" onClick={handleClick} title="Salir del sitio" >Salir</a>
                 </Navbar.Text>
               </Navbar.Collapse>
 

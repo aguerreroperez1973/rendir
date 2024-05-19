@@ -1,20 +1,19 @@
+//import { user } from '../../database/user.js';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
-//import { user } from '../../database/user.js';
+import { useContext, useState } from 'react';
 import { ENDPOINT } from '../../config/constans.js';
+import { Context } from '../../contexts/Context.jsx';
 
 function LogIn () {
-  //const initialForm = { email: 'docente@desafiolatam.com', password: '123456' }
+  const { setUser } = useContext(Context);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState();
-  //const [user, setUser] = useState([{}]);
   const navigate = useNavigate();
-  //const [datauser, setDataUser] = useState(user);
 
   //Estado para los errores
   const [alert, setAlert] = useState('');
@@ -50,8 +49,7 @@ function LogIn () {
 
   fetch(ENDPOINT.login , {
   method: "POST",
-  headers: {
-    "Content-Type": "application/json",},
+  headers: { "Content-Type": "application/json",},
   body: JSON.stringify(userlogin)},)
   .then(response => response.json())
   .then(result => {
@@ -60,9 +58,11 @@ function LogIn () {
       setAlert("danger")
       setMessage(result.message)
      } else {
-            localStorage.setItem("token", result.token)
-            //let mytoken = localStorage.getItem("token")
-            //console.log(mytoken)
+     //console.log(result)
+            sessionStorage.setItem("token", result.token)
+            sessionStorage.setItem("user", result.email)
+            console.log(sessionStorage.getItem("user"))
+            setUser(result.email)
             navigate(`/home/`) }})
   .catch((err) => {console.log(err);});
  }
