@@ -11,7 +11,7 @@ import Rendiciones from './views/rendicion/rendiciones';
 import Rendicion from './views/rendicion/rendicion';
 import LogIn from './components/login/LogIn';
 import AddAbono from './views/addAbono/AddAbono';
-import Profile from './views/profile/profile';
+import Profile from './views/profile/Profile';
 import './App.css';
 //import { useContext } from 'react';
 //import { Context } from './contexts/Context';

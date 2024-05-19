@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import MiProfile from '../../components/profile/MiProfile'
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,6 @@ function Profile() {
 
   useEffect(()=> { if(!token){ navigate(`/login/`) } 
                         else { setUser(username) } }, [])
-
 
   return (
     <>
