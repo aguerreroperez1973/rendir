@@ -1,4 +1,5 @@
-export const URLBASE = 'http://localhost:3000'
+//export const URLBASE = 'http://localhost:3000'
+export const URLBASE = 'http://incotel2.ddns.net:3000'
 
 //const loginUrl = '/public/user.json'; 
 //const abonoUrl = '/public/abonos.json';
