@@ -9,9 +9,10 @@ import { ENDPOINT } from '../../config/constans.js';
 import { useNavigate } from 'react-router-dom';
 
 const AddAbono = () => {
-  const navigate = useNavigate();
+  
   const { data, setUser } = useContext(Context);
   
+  const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
   const username = sessionStorage.getItem("user");
 
@@ -63,7 +64,6 @@ const validarDatos = (proyecto, user_id, descripcion, monto, fecha_out) => {
   }
 
 const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
-  let token = localStorage.getItem('token')
 
   const newAbono = {  
               proyecto: proyecto, 

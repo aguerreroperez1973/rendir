@@ -1,17 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Alert from 'react-bootstrap/Alert';
 import { Table } from "react-bootstrap";
 import { Context } from "../../contexts/Context";
 import { ENDPOINT } from "../../config/constans";
+import { useNavigate } from "react-router-dom";
 
 const RendicionTable = ( { abono_id } ) => {
 
-  const { rendiciones, setRendiciones } = useContext( Context );
+  const { rendiciones, setRendiciones, setUser } = useContext( Context );
+
+  const navigate = useNavigate();
+  const token = sessionStorage.getItem("token");
+  const username = sessionStorage.getItem("user");
+
+
+  useEffect(()=> { if(!token){ navigate(`/login/`) } 
+                        else { setUser(username) } }, [])
 
 //Estado para los errores ///////////////////////////////////////////
 const [alert, setAlert] = useState('');
 const [message, setMessage] = useState('');
-const [activeMsg, setActiveMsg] = useState(false);
+//const [activeMsg, setActiveMsg] = useState(false);
+const [show, setShow] = useState(false);
 
   const rendixabono = rendiciones.filter((el) => el.abono_id == abono_id).slice();
   
@@ -29,12 +39,12 @@ const findId = rendixabono[index].id
       headers: {Authorization: `Bearer ${token}`}
       }).then(response => {
         if(!response.ok){
-          setActiveMsg(true)
+          setShow(true)
           setAlert("danger")
           setMessage("Error: No fué posible ingresar el abono")
         }
         else{
-          setActiveMsg(true)
+          setShow(true)
           setAlert("success")
           setMessage("Item eliminado con exito")}
         })
@@ -43,7 +53,7 @@ const findId = rendixabono[index].id
 ///////////////////////////////////////////////////////////////////
   return (
         <div className="row col-10 col-sm-9 col-md-8 col-lg-6 mx-auto mt-5 border border-light rounded" >
-            { activeMsg ? <Alert variant={alert}> {message} </Alert> : null }
+            <Alert variant={alert} show={show}  onClose={() => setShow(false)}    dismissible> {message} </Alert>
             <div><Table responsive="sm" striped bordered hover variant="light" >
               <thead >
                 <tr>

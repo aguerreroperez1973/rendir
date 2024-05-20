@@ -33,8 +33,8 @@ const validarInput = (e) => {
          return
        } 
      
-       setAlert("success")
-       setMessage("datos ingresados: " + email +"-"+ password)
+      // setAlert("success")
+      // setMessage("datos ingresados: " + email +"-"+ password)
   validarDatos(nombre,apellido,email,password, password2)
 }
 
@@ -60,7 +60,7 @@ const validarPassword = (password, password2)=>{
     setMessage("Error: Las contraseñas de contener más de 8 caracteres!!")
     return
   }
-  registrarUsuario(nombre,apellido,email, password)
+  registrarUsuario(nombre, apellido, email, password)
 }
 
 const registrarUsuario = async (nombre, apellido, email, password) => {

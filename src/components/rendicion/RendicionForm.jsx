@@ -7,17 +7,21 @@ import { ENDPOINT } from '../../config/constans.js';
 import RendicionTable from "./RendicionTable.jsx";
 
 const RendicionForm = () => {
+  const { data, rendiciones, setRendiciones, setUser} = useContext(Context);
+  
   const navigate = useNavigate();
-  useEffect(()=> { 
-    if(!sessionStorage.getItem('username')){ navigate(`/login/`) }
-  },[])
-    const { data, rendiciones, setRendiciones} = useContext(Context);
+  const token = sessionStorage.getItem("token");
+  const username = sessionStorage.getItem("user");
+
+  useEffect(()=> { if(!token){ navigate(`/login/`) } 
+                        else { setUser(username) } }, [])
 
     const [monto, setMonto] = useState('');
     const [tipo_gasto, setTipo_gasto] = useState('');
     const [tipo_doc, setTipo_doc] = useState('');
     const [number_doc, setNumber_doc] = useState('');
     const [detalle, setDetalle] = useState('');
+    const [show, setShow] = useState(false);
 
   ///// ID del abono ////////////////////////////////////////////
   const { id } = useParams();
@@ -37,14 +41,25 @@ const RendicionForm = () => {
     const [alert, setAlert] = useState('');
     const [message, setMessage] = useState('');
 
-  /////// Procesar formulario //////////////////////////////////////////
+  /////// Procesar formulario //////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleSubmit = (e) => {
+    
     const saldo = datoAbonoMonto - monto;
     let token = localStorage.getItem('token')
 
+    // Prevenimos el comportamiento por defecto
     e.preventDefault(); 
-    
-    const newItem = { 
+
+    // Validación input
+   if(monto === '' || tipo_gasto ==='' || tipo_doc === 'Seleccionar..' || number_doc ==='' || detalle ===''){
+    setShow(true)
+    setAlert("danger")
+    setMessage("Error:Debe completar todos los datos")
+    return
+  } 
+
+  //////////// crear objeto para cargar ////////////////////////////////
+      const newItem = { 
       monto: monto, 
       tipo_gasto: tipo_gasto,
       tipo_doc: tipo_doc,
@@ -64,10 +79,12 @@ const RendicionForm = () => {
     body: JSON.stringify(newItem)},) 
     .then(response => {
           if(!response.ok){
+            setShow(true)
             setAlert("danger")
             setMessage("Error: No fué posible ingresar la rendición")
           }
           else{ 
+                    setShow(true)
                     setAlert("success")
                     setMessage("Rendición ingresada con exito")
                     setRendiciones([...rendiciones, { monto: monto, 
@@ -90,6 +107,10 @@ const RendicionForm = () => {
     setTipo_doc('');
     setNumber_doc('');
     setDetalle('');
+
+    /*const ClosedRendi = () => {
+     console.log("pendiente")
+      };*/
   };
 
   return (
@@ -99,7 +120,9 @@ const RendicionForm = () => {
       <hr />
       <Form onSubmit={handleSubmit} >
         <Form.Group className="mb-3 col-12 col-md">
-        <Alert variant={alert}>{message}</Alert>
+
+        <Alert variant={alert} show={show}  onClose={() => setShow(false)}    dismissible> {message} </Alert>
+
           <Form.Label>Monto</Form.Label>
           <Form.Control
             type="number"
@@ -126,7 +149,7 @@ const RendicionForm = () => {
           <Form.Select
             type="text"
             name="tipo_doc"
-            onChange={(e) => setTipo_doc(e.target.value)}>
+            onChange={(e) => setTipo_doc(e.target.value)} value={tipo_doc}>
               <option>Seleccionar..</option>
               <option value="Boleta">Boleta</option>
               <option value="Bactura">Factura</option>
@@ -154,13 +177,20 @@ const RendicionForm = () => {
             onChange={(e) => setDetalle(e.target.value)}
             value={detalle} />
         </Form.Group>
-
-      <Button
-        variant="primary"
-        className="col-5 col-sm-4 col-md-3 mx-auto"
-        type="submit" >
-        Agregar
-      </Button>
+      <div className="flex" >
+            <Button
+            variant="primary"
+            className="col-5 col-sm-4 col-md-3 mx-auto"
+            type="submit" >
+            Agregar
+          </Button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <Button
+            variant="primary"
+            className="col-5 col-sm-4 col-md-3 mx-auto">
+            Cerrar
+          </Button></div>
     </Form>
     </div>
 

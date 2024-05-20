@@ -11,11 +11,8 @@ function MiProfile( ) {
   const navigate = useNavigate();
   const { user } = useContext(Context);
 
-  useEffect(()=> { 
-    if(!user){ navigate(`/login/`) }
-  },[])
+  useEffect(()=> { if(!user){ navigate(`/login/`) }  },[])
 
-  
   const {userdata} = useContext(Context);
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
@@ -23,6 +20,8 @@ function MiProfile( ) {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
 
+  const [nameuser] = userdata.filter( (p) => p.email == user ).map((n)=> (n.nombre))
+  const [lastnameuser] = userdata.filter( (p) => p.email == user ).map((l)=> (l.apellido))
 //Estado para los errores
 const [alert, setAlert] = useState('');
 const [message, setMessage] = useState('');
@@ -80,11 +79,12 @@ const registrarUsuario = async (nombre, apellido, email, password) => {
     body: JSON.stringify(newUser)},)
     .then(response => {
       if(!response.ok){
-        console.log(response.message);
+        //console.log(response.message);
         setAlert("danger")
         setMessage("Error: No fué posible ingresar el usuario")
       }
-      else{console.log(response.message);
+      else{
+        //console.log(response.message);
         setAlert("success")
         setMessage("Usuario ingresado con exito")}
       })
@@ -110,32 +110,32 @@ const registrarUsuario = async (nombre, apellido, email, password) => {
             <Alert variant={alert}>{message}</Alert>
               <Form.Group className="mb-3" >
                   <Form.Label><strong>Nombre</strong></Form.Label>
-                  <Form.Control type="text" name="nombre" placeholder="Ingresar nombre"
-                  onChange={(e) => setNombre(e.target.value)} value={userdata.nombre} />
+                  <Form.Control type="text" name="nombre"  placeholder={nameuser}
+                  onChange={(e) => setNombre(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label><strong>Apellido</strong></Form.Label>
-                  <Form.Control type="text" name="apellido" placeholder="Ingresar tu apellido"
-                  onChange={(e) => setApellido(e.target.value)} value={apellido} />
+                  <Form.Control type="text" name="apellido" placeholder={lastnameuser}
+                  onChange={(e) => setApellido(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
                   <Form.Label><strong>Correo Electrónico</strong></Form.Label>
-                  <Form.Control type="email" name="email" placeholder="Ingresar email"
-                  onChange={(e) => setEmail(e.target.value)} value={email} />
+                  <Form.Control type="email" name="email" placeholder={user}
+                  onChange={(e) => setEmail(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
                   <Form.Label><strong>Password</strong></Form.Label>
-                  <Form.Control type="password" name="password" placeholder="Password" 
-                  onChange={(e) => setPassword(e.target.value)} value={password}/>
+                  <Form.Control type="password" name="password" placeholder="" 
+                  onChange={(e) => setPassword(e.target.value)} value='2'/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
                   <Form.Label><strong> confirmar Password</strong></Form.Label>
-                  <Form.Control type="password" name="password2" placeholder="Password" 
-                  onChange={(e) => setPassword2(e.target.value)} value={password2}/>
+                  <Form.Control type="password" name="password2" placeholder="********" 
+                  onChange={(e) => setPassword2(e.target.value)} value='2'/>
                 </Form.Group>
                 <div> <Button variant="primary" type="submit"> Guardar </Button> </div>
                 

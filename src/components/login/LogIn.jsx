@@ -33,10 +33,6 @@ function LogIn () {
            console.log("Error:Debe completar todos los datos")
            return
          } 
-       
-         //setAlert("success")
-         //setMessage("datos ingresados: " + email +"-"+ password)
-        // console.log("datos ingresados: " + email +"-"+ password)
 
     autenticacion(email,password);
   
@@ -54,14 +50,14 @@ function LogIn () {
   .then(response => response.json())
   .then(result => {
     if(!result.token){
-      console.log(result.message);
+      //console.log(result.message);
       setAlert("danger")
       setMessage(result.message)
      } else {
-     //console.log(result)
+     console.log(result)
             sessionStorage.setItem("token", result.token)
             sessionStorage.setItem("user", result.email)
-            console.log(sessionStorage.getItem("user"))
+            console.log(sessionStorage.getItem("token"))
             setUser(result.email)
             navigate(`/home/`) }})
   .catch((err) => {console.log(err);});

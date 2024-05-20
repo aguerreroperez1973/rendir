@@ -1,6 +1,6 @@
 //import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 //import { Context } from '../src/contexts/Context';
 //import { useContext } from 'react';
 import Home from './views/home/Home'
@@ -22,22 +22,24 @@ function App() {
   //console.log(user)
   return (
     <>
-      <BrowserRouter>
-        <NavBar></NavBar>
-          <Routes >
-            <Route path="/" element={<Home></Home>} />
-           <Route path="/home" element={<HomePage></HomePage>} />
-            {/*<Route path="/home/:email" element={<HomePage></HomePage>} />*/}
-            {/*<Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />*/}
-            <Route path="/login" element={ <LogIn /> } />
-            <Route path="/abono" element={ <AddAbono /> } />
-            <Route path="/register" element={ <Register />} />
-            <Route path="/rendiciones" element={ <Rendiciones />} />
-            <Route path="/rendicion/" element={ <Rendicion />} />
-            <Route path="/rendicion/:id" element={ <Rendicion />} />
-            <Route path="/perfil/" element={ <Profile />} />
-          </Routes>
-      </BrowserRouter>
+       {/* <BrowserRouter> */}
+        <HashRouter>
+          <NavBar></NavBar>
+            <Routes >
+              <Route path="/*" element={<Home></Home>} />
+              <Route path="/home" element={<HomePage></HomePage>} />
+              {/*<Route path="/home/:email" element={<HomePage></HomePage>} />*/}
+              {/*<Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />*/}
+              <Route path="/login" element={ <LogIn /> } />
+              <Route path="/abono" element={ <AddAbono /> } />
+              <Route path="/register" element={ <Register />} />
+              <Route path="/rendiciones" element={ <Rendiciones />} />
+              <Route path="/rendicion/" element={ <Rendicion />} />
+              <Route path="/rendicion/:id" element={ <Rendicion />} />
+              <Route path="/perfil/" element={ <Profile />} />
+            </Routes>
+            </HashRouter>
+      {/*  </BrowserRouter> */}
     </>
   )
 }

@@ -18,7 +18,7 @@ function Profile() {
 
   return (
     <>
-      <Offcanvas show={show} onHide={handleClose} placement="end">
+      <Offcanvas show={show} onHide={handleClose} placement="end" backdrop="false">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Mi Perfil</Offcanvas.Title>
         </Offcanvas.Header>
