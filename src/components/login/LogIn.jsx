@@ -54,7 +54,7 @@ function LogIn () {
       setAlert("danger")
       setMessage(result.message)
      } else {
-     console.log(result)
+            //console.log(result)
             sessionStorage.setItem("token", result.token)
             sessionStorage.setItem("user", result.email)
             console.log(sessionStorage.getItem("token"))

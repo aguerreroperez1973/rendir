@@ -9,8 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AddAbono = () => {
   
-  const { data, userData, setUser } = useContext(Context);
-  //console.log([userData])
+  const { data, setUser } = useContext(Context);
   
   const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
@@ -119,14 +118,10 @@ const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
                 <Form.Label><strong>Nombre del Trabajador</strong></Form.Label>
                     <Form.Select aria-label="Default select example" name="trabajador" 
                     onChange={(e) => setUser_id(e.target.value)} value={user_id} >
-
-                  { /*userData.map( (el) => { return <option key={el.id}> {el.id } </option>} ) */}
                     <option>Seleccionar... </option>
                     <option value="1">Ulises Reyes</option>
                     <option value="2">José Fuentes</option>
                     <option value="3">Luis Chamorro</option>
-
-
                     </Form.Select>
                 </Form.Group>
 
