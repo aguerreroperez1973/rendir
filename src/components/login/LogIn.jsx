@@ -57,7 +57,7 @@ function LogIn () {
             //console.log(result)
             sessionStorage.setItem("token", result.token)
             sessionStorage.setItem("user", result.email)
-            console.log(sessionStorage.getItem("token"))
+            //console.log(sessionStorage.getItem("token"))
             setUser(result.email)
             navigate(`/home/`) }})
   .catch((err) => {console.log(err);});

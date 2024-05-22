@@ -15,21 +15,21 @@ const ContextProvider = ({ children }) => {
   const consultarApiAbono = async () => {  
       const response = await fetch(ENDPOINT.abonos);
       const abonodata = await response.json();
-      console.log(data)
+      //console.log(data)
       setData(abonodata)
   };
 
   const consultarApiUser = async () => {  
     const res = await fetch(ENDPOINT.users);
     const userdata = await res.json();
-    console.log(userdata)
+    //console.log(userdata)
     setUserdata(userdata)
   };
 
   const consultarApiRendicion = async () => {  
     const respuesta = await fetch(ENDPOINT.rendiciones);
     const rendidata = await respuesta.json();
-    console.log(rendidata)
+    //console.log(rendidata)
     setRendiciones(rendidata)
   };
 
