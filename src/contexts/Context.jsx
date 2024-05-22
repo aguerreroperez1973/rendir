@@ -15,28 +15,22 @@ const ContextProvider = ({ children }) => {
   const consultarApiAbono = async () => {  
       const response = await fetch(ENDPOINT.abonos);
       const abonodata = await response.json();
-      if(!abonodata){ console.log("message: "+abonodata.message) } 
-        else { setData(abonodata) }
-      //console.log(data)
-      //setData(abonodata)
+      console.log(data)
+      setData(abonodata)
   };
 
   const consultarApiUser = async () => {  
     const res = await fetch(ENDPOINT.users);
     const userdata = await res.json();
-    if(!userdata){ console.log("message: "+userdata.message) } 
-        else { setData(userdata) }
-    //console.log(userdata)
-    //setUserdata(userdata)
+    console.log(userdata)
+    setUserdata(userdata)
   };
 
   const consultarApiRendicion = async () => {  
     const respuesta = await fetch(ENDPOINT.rendiciones);
     const rendidata = await respuesta.json();
-    if(!rendidata){ console.log("message: "+rendidata.message) } 
-        else { setData(rendidata) }
-    //console.log(rendidata)
-    //setRendiciones(rendidata)
+    console.log(rendidata)
+    setRendiciones(rendidata)
   };
 
 useEffect(() => {
