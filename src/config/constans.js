@@ -2,7 +2,7 @@
 //export const URLBASE = 'http://localhost:3000'
 //export const URLBASE = 'http://192.168.1.82:3000'
 //export const URLBASE = 'http://incotel2.ddns.net:3000'
-export const URLBASE = 'https://rendi2.onrender.com:3000'
+export const URLBASE = 'https://rendi2.onrender.com'
 
 export const ENDPOINT = {
   login: `${URLBASE}/login/`,
