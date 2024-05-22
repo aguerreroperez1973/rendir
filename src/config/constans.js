@@ -1,6 +1,8 @@
 //export const URLBASE = 'http://127.0.0.1:3000'
+//export const URLBASE = 'http://localhost:3000'
 //export const URLBASE = 'http://192.168.1.82:3000'
-export const URLBASE = 'https://incotel2.ddns.net:3000'
+//export const URLBASE = 'https://incotel2.ddns.net:3000'
+export const URLBASE = '44.233.151.27'
 
 export const ENDPOINT = {
   login: `${URLBASE}/login/`,
