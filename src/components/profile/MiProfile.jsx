@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 
 function MiProfile( ) {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
+  const { userdata, user } = useContext(Context);
 
-  useEffect(()=> { if(!user){ navigate(`/login/`) }  },[])
+  useEffect(()=> { if(!user){ navigate(`/login/`) }  }, [])
 
   const {userdata} = useContext(Context);
   const [nombre, setNombre] = useState('');
