@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom';
 
 const AddAbono = () => {
   
-  const { data, userData, setUser } = useContext(Context);
-  //console.log([userData])
+  const { data, userdata, setUser } = useContext(Context);
+  //console.log(userdata)
   
   const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
   const username = sessionStorage.getItem("user");
+  const [show, setShow] = useState(false);
 
   useEffect(()=> { if(!token){ navigate(`/login/`) } 
                         else { setUser(username) } }, [])
@@ -45,7 +46,8 @@ const validarInput = (e) => {
 
   // Validación input
    if(proyecto === '' || user_id ==='' || descripcion ==='' || monto ==='' || fecha_out ===''){
-         setAlert("danger")
+        setShow(true)
+        setAlert("danger")
          setMessage("Error:Debe completar todos los datos")
          return
        } 
@@ -56,7 +58,9 @@ const validarInput = (e) => {
 const validarDatos = (proyecto, user_id, descripcion, monto, fecha_out) => {
 
   const autenticado = data.filter(el => el.proyecto === proyecto && el.user_id === user_id)
-  if (autenticado != ""){  setAlert("danger")
+  if (autenticado != ""){  
+                          setShow(true)
+                          setAlert("danger")
                            setMessage("Error: El abono ya existe para ese trabajador!!!") 
                           return
                         }
@@ -83,10 +87,12 @@ const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
     .then(response => {
       if(!response.ok){
         console.log(response.ok);
+        setShow(true)
         setAlert("danger")
         setMessage("Error: No fué posible ingresar el abono")
       }
       else{console.log(response.ok);
+        setShow(true)
         setAlert("success")
         setMessage("Abono ingresado con exito")}
       })
@@ -108,24 +114,21 @@ const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
         <div><h3>Ingresar abono:</h3></div>
         <hr />
         <div>
-            <Form onSubmit={validarInput} > <Alert variant={alert}>{message}</Alert>
+            <Form onSubmit={validarInput} > 
+            {/*<Alert variant={alert}>{message}</Alert>*/}
+            <Alert variant={alert} show={show}  onClose={() => setShow(false)}    dismissible> {message} </Alert>
                 <Form.Group className="mb-3">
                       <Form.Label><strong>Nombre del proyecto</strong></Form.Label>
                       <Form.Control type="text" name="proyecto" placeholder="Ingresar nombre del proyecto"
-                      onChange={(e) => setProyecto(e.target.value)} value={proyecto} />
+                        onChange={(e) => setProyecto(e.target.value)} value={proyecto} />
                     </Form.Group>
 
                 <Form.Group className="mb-3" >
                 <Form.Label><strong>Nombre del Trabajador</strong></Form.Label>
                     <Form.Select aria-label="Default select example" name="trabajador" 
-                    onChange={(e) => setUser_id(e.target.value)} value={user_id} >
-
-                  { /*userData.map( (el) => { return <option key={el.id}> {el.id } </option>} ) */}
-                    <option>Seleccionar... </option>
-                    <option value="1">Ulises Reyes</option>
-                    <option value="2">José Fuentes</option>
-                    <option value="3">Luis Chamorro</option>
-
+                       onChange={(e) => setUser_id(e.target.value)} value={user_id} >
+                                                  <option > Seleccionar ...</option>
+                        {userdata.map( (el,i) => ( <option key={i} value={el.id}> {el.nombre} {el.apellido} </option> ) )}
 
                     </Form.Select>
                 </Form.Group>
@@ -133,7 +136,7 @@ const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
                 <Form.Group className="mb-3" >
                   <Form.Label><strong>Descripcion del Abono</strong></Form.Label>
                   <Form.Control as="textarea" rows={2} name="descripcion" 
-                  onChange={(e) => setDescripcion(e.target.value)} value={descripcion}/>
+                     onChange={(e) => setDescripcion(e.target.value)} value={descripcion}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
@@ -152,6 +155,7 @@ const registrarAbono = (proyecto, user_id, descripcion, monto, fecha_out) => {
                   Guardar
                 </Button>
             </Form>
+
         </div>
        <br />
               {/*}  <ul>
